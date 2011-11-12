@@ -8,35 +8,41 @@ var Ypn = {
     run: function() {
         this.init();
         this.title = $('#eow-title').text().trim();
-        this.read_items();
-        this.add_links();
+        this.scan_items();
+        this.mark_items();
     },
-    read_items: function() {
+    scan_items: function() {
         var self = this;
         $('#watch-related').find('a').filter('.video-list-item-link ').each(function(idx) {
             var title = $(this).find('[title]').attr('title');
             var link = $(this).attr('href');
-            self.add_item(title, link);
+            switch (self.check_item(title, link)){
+                case 'prev':
+                    self.prev = {title: title, a: $(this)};
+                    break;
+                case 'next':
+                    self.next = {title: title, a: $(this)};
+                    break;
+            }
         });
     },
-    add_item: function(title, link) {
+    check_item: function(title, link) {
         if (title < this.title && (!this.prev.title || title > this.prev.title)) {
-            this.prev = {title: title, link: link};
             console.log('prev: '+title);
+            return 'prev';
         } else if (title > this.title && (!this.next.title || title < this.next.title)) {
-            this.next = {title: title, link: link};
             console.log('next: '+title);
+            return 'next';
         } else {
             console.log('skip: '+title);
+            return 'skip';
         }
     },
-    add_links: function() {
-        if (this.next) {
-            $('#watch-headline-title').append('<a href="'+this.next.link+'" id="next-related-video">'+this.next.title+'</a>');
-        }
-        if (this.prev) {
-            $('#watch-headline-title').prepend('<a href="'+this.prev.link+'"id="prev-related-video">'+this.prev.title+'</a>');
-        }
+    mark_items: function() {
+        this.prev && this.prev.a.find('span').filter(':last').before('<span class="stat alt">prev</span>')
+            && $('#watch-related').prepend($('li').has(this.prev.a));
+        this.next && this.next.a.find('span').filter(':last').before('<span class="stat alt">next</span>')
+            && $('#watch-related').prepend($('li').has(this.next.a));
     }
 };
 Ypn.run();
