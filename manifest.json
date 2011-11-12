@@ -2,11 +2,11 @@
   "name": "YouTube Play Next",
   "version": "1.0",
   "description": "Play next related video by sorting titles",
-  "icons": { "16": "ghf16.png", "48": "ghf48.png", "128": "ghf128.png" },
+  "icons": { "16": "ytn16.png", "48": "ytn48.png", "128": "ytn128.png" },
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/watch*"],
-      "js": ["jquery-1.4.2.min.js", "next.js"]
+      "js": ["jquery.min.js", "next.js"]
     }
   ]
 }

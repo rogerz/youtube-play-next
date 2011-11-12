@@ -2,18 +2,14 @@ var Ypn = {
     next: {},
     prev: {},
     title: '',
-    init: function() {
-        this.title = '';
-    },
     run: function() {
-        this.init();
         this.title = $('#eow-title').text().trim();
         this.scan_items();
         this.mark_items();
     },
     scan_items: function() {
         var self = this;
-        $('#watch-related').find('a').filter('.video-list-item-link ').each(function(idx) {
+        $('#watch-related').find('a').filter('.video-list-item-link').each(function(idx) {
             var title = $(this).find('[title]').attr('title');
             var link = $(this).attr('href');
             switch (self.check_item(title, link)){
@@ -28,20 +24,17 @@ var Ypn = {
     },
     check_item: function(title, link) {
         if (title < this.title && (!this.prev.title || title > this.prev.title)) {
-            console.log('prev: '+title);
             return 'prev';
         } else if (title > this.title && (!this.next.title || title < this.next.title)) {
-            console.log('next: '+title);
             return 'next';
         } else {
-            console.log('skip: '+title);
             return 'skip';
         }
     },
     mark_items: function() {
-        this.prev && this.prev.a.find('span').filter(':last').before('<span class="stat alt">prev</span>')
+        this.prev && this.prev.a.find('span').filter(':last').before('<span class="stat alt">Prev</span>')
             && $('#watch-related').prepend($('li').has(this.prev.a));
-        this.next && this.next.a.find('span').filter(':last').before('<span class="stat alt">next</span>')
+        this.next && this.next.a.find('span').filter(':last').before('<span class="stat alt">Next</span>')
             && $('#watch-related').prepend($('li').has(this.next.a));
     }
 };
