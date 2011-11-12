@@ -1,12 +1,13 @@
 {
   "name": "YouTube Play Next",
   "version": "1.0",
-  "description": "Play next related video by sorting titles",
-  "icons": { "16": "ytn16.png", "48": "ytn48.png", "128": "ytn128.png" },
+  "description": "Guess next related video from the title and put it on top. It also guess the previous one",
+  "icons": { "16": "ypn16.png", "48": "ypn48.png", "128": "ypn128.png" },
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/watch*"],
       "js": ["jquery.min.js", "next.js"]
     }
-  ]
+  ],
+  "homepage_url": "http://github.com/rogerz/youtube-play-next"
 }
